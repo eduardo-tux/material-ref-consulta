@@ -1,0 +1,114 @@
+
+O que é o Pyenv?
+
+O Pyenv é um gerenciador de ambientes Python.
+De maneira resumida, é uma ferramente que te permite 
+escolher entre diversas versões do Python para usar.
+
+
+Instalando o Pyenv
+
+De acordo com o repositório oficial da ferramente no GitHub, 
+para instalar o Pyenv, precisamos digitar no terminal 
+o seguinte comando:
+
+    curl https://pyenv.run | bash
+
+
+ $ indica que você deve usar o usuário comum para fazer essa operação.
+
+ curl é uma ferramenta em linha de comando para transferência de dados com sintaxe URL.
+
+ | , esse símbolo é conhecido como pipe. Ele pega a saída de um comando dado à esquerda e o coloca como entrada para o comando da direita.
+
+ bash é o shell.
+
+
+Agora vamos abrir o arquivo .bashrc
+
+    nano .bashrc
+
+ou 
+
+    nano ~/.bashrc
+
+Caso você não esteja na sua home.
+
+
+e acrescentar ao final do arquivo essas linhas:
+
+export PATH="$HOME/.pyenv/bin:$PATH"
+eval "$(pyenv init --path)"
+eval "$(pyenv virtualenv-init -)"
+
+Você pode usar o editor de texto que preferir para fazer isso.
+atenção para não esquecer de salvar o arquivo antes de sair do editor.
+
+
+Agora basta reiniciar o Shell, fechando a janela do Terminal e abrindo outra, 
+ou digitar o comando
+
+    exec $SHELL
+
+Ao digitar
+
+    pyenv
+
+no terminal e a instalação tiver sida feito com sucesso, o retorno será 
+uma lista mostrando os comandos que podem ser usados no pyenv.
+
+
+Instalando a sua versão preferida do Python
+
+A partir de agora podemos escolher qual versão do Python instalar com 
+a ajuda do Pyenv. Para isso basta digitar:
+
+    pyenv install -list
+
+que mostrará todas as versões python disponíveis para poder instalar 
+no sistema.
+
+Vou escolher a última versão estável que tenho disponível (no momento em que 
+escrevo esse tutorial):
+
+    3.10.0
+
+uma vez escolhida a versão do python, para instarmos ela, basta digitar 
+no terminal:
+
+    $ pyenv install 3.10.0
+
+    ( Nesse exemplo, escolhemos a versão 3.10.0 do python, escolha a que vc preferir)
+
+agora usando o comando abaixo:
+
+    pyenv versions
+
+o pyenv exibe todas as versões do python instaladas com o pyenv.
+
+
+OBS: caso vc use o comando: pyenv versions, e apareça a linha abaixo 
+selecionada por um asterisco:
+
+    system (set by /home/seuUsuario/.pyenv/version)
+
+significa que a versão do python selecionada pelo pyenv é a versão do python 
+instalada por padrão do sistema.
+
+caso deseje que a versão instalada pelo pyenv seja a versão python 
+reconhecida por todo o sistema operacional, basta digitar o comando:
+
+    pyenv global 3.10.0
+
+    ( nesse caso, escolhemos a versão 3.10.0, escolha a que você preferir )    
+
+agora, se digitarmos o comando pyenv versions, vc verá que 
+a versão python selecionada para uso é a versão que foi instalada com o pyenv.
+
+e se usarmos o comando:
+
+    which python
+
+será mostrado que a versão do python que o nosso sistema operacional está 
+usando ( por conta do comando: pyenv global 3.10.0 ), é a versão que 
+instalamos com o pyenv.
