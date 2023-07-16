@@ -22,18 +22,6 @@ OBS: Normalmente vc configura uma pasta vazia como repositório git, mas vc pode
 definir como repositório uma pasta do computador que já contenha arquivos.
 
 
-#Nota:essa anotação é somente a nivel de conhecimeto.
-#a pasta .git mostra as pastas referentes a:
--HEAD - branch padão que ele tá.
--branches - branchs existentes no projeto.
--config - configuração do repositório git.
--description - 
--hooks - gatilhos para fazer certas ações durante seu o projeto
--info - 
--objects - 
--refs - referencias de cada arquivo dentro do git
-
-
 
 #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 #         configurando chave SSH 
@@ -75,6 +63,35 @@ a partir desse momento, conseguimos envias os versionamentos dos
 nossos arquivos criados com o git na nossa máquina local, para o GitHub.
 
 
+#=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+#Criando um novo repositório pela linha de comando
+#=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+#siga os passos abaixo:
+
+echo "# nomeDaPastaDoGitHub" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git remote add origin git@github.com:eduardochagas/nomeDaPastaDoGitHub
+git push -u origin master
+
+
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+#  arquivos contidos dentro da pasta .git ( pasta oculta do git )
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+#Nota:essa anotação é somente a nivel de conhecimeto.
+#a pasta .git mostra as pastas referentes a:
+-HEAD - branch padão que ele tá.
+-branches - branchs existentes no projeto.
+-config - configuração do repositório git.
+-description - 
+-hooks - gatilhos para fazer certas ações durante seu o projeto
+-info - 
+-objects - 
+-refs - referencias de cada arquivo dentro do git
+
+
 
 #=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 # manipulando arquivos no git
@@ -89,9 +106,6 @@ git add nome_do_arquivo
 #adiciona todos os arquivos para a stage area (caso queira adicionar todos de uma só vez)
 git add --all
 
-#para dar commit nos arquivos da stage area (último estagio antes de preparar para 
-#enviar os arquivos para o gitHub)
-git commit -m "insira um texto referente ao que vc fez nesse commit"
 
 #mostra uma lista dos arquivos que não estão na stage area e que podem ser apagados...
 git clean -n
@@ -111,20 +125,42 @@ selecionados para remoção ficarão com o sinal de asterisco, e para remove-los
 tecla c (c da opção de clean) e pressione enter, pronto, os arquivos serão apagados.
 
 
+#=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=
+#Comando git diff
 #=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-# usando o .gitignore
+
+#exibe no terminal o que foi alterado no(s) arquivo(s)
+OBS:utilize SEMPRE o git diff para saber o que foi alterado no(s)
+arquivo(s) e ter certeza se é assim que vc deseja que os arquivos estejam, 
+antes de fazer o commit do(s) arquivo(s).
+git diff
+
+#para saber qual foi a alteração (o que foi feito nesse commit)
+git diff numeracaoDoCommitAqui
+
+#para saber qual foi a alteração feita entre os commits
+git diff numeracaoDoCommitAqui numeracaoDoOutroCommitAqui
+
+#exibe somente o nome do(s) arquivo(s) que foram modificados.
+git diff --name-only
+
+
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+# Como dar commit no git
+#-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+para dar commit nos arquivos da stage area (último estagio antes de preparar para enviar os arquivos para o gitHub)
+git commit -m "insira um texto referente ao que vc fez nesse commit"
+
+
 #=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+#    Modificando a mensagem do commit 
+# ( caso tenha escrito errado a mensagem ou queira modifica-la )
+#=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+git commit --amend
 
-#para fazer o git ignorar um ou vários arquivos dentro do repositório, crie um arquivo
-#chamado .gitignore e insira dentro dele os arquivos que vc quer que o git ignore.
-
-OBS: vc pode fazer com que o git ignore vários arquivos de uma determinada extensão, por 
-exemplo: *.py, ignorará todos os arquivos com extensão .py.
-OBS2: se um arquivo já foi rastreado/trackeado, ou seja, já está na stage área, e vc decide 
-inserir esse arquivo no .gitignore, então o git não consegue ignorar o arquivo. Para que 
-o git consiga ignora-lo, é necessário retirar o arquivo da stage area para aí sim o git conseguir ignora-lo.
-
-
+  OBS: abrirá uma janela do seu editor de texto, basta trocar
+  o nome da mensagem e salvar o arquivo.
+  
 
 #=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 #Comandos git log
@@ -157,28 +193,139 @@ OBS:o numero da hash do commit é parecido com: 6tg767gghh74jh45jh6h3jh2
 git show numeroDaHash
 
 
-#=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=--=-=-=-=-=-=
-#Comando git diff
-#=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+#=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+# ou empurre ao GitHub um reporitorio (repo local, para o GitHub)  
+# a partir da linha de comando
+#=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
-#exibe no terminal o que foi alterado no(s) arquivo(s)
-OBS:utilize SEMPRE o git diff para saber o que foi alterado no(s)
-arquivo(s) e ter certeza se é assim que vc deseja que os arquivos estejam, 
-antes de fazer o commit do(s) arquivo(s).
-git diff
+#significa: adicione ao repositório remoto na origem desse link git@github...
+#segundo comando: empurre para a origem (que é o link até o repositório do 
+#GitHub, ou seja, git@github...) os arquivos da branch local chamado master.
+git remote add origin git@github.com:eduardochagas/nomeDaPastaDoGitHub
+git push -u origin master
 
-#para saber qual foi a alteração (o que foi feito nesse commit)
-git diff numeracaoDoCommitAqui
+#mostra a origem (do repositorio remoto)
+git remote
 
-#para saber qual foi a alteração feita entre os commits
-git diff numeracaoDoCommitAqui numeracaoDoOutroCommitAqui
+#mostra a origem (do repositório remoto) e seu endereço
+git remote -v
 
-#exibe somente o nome do(s) arquivo(s) que foram modificados.
-git diff --name-only
+
+#=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+# Clonando repositorios do GitHub
+#=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+#clona todo um repositório para a sua maquina local
+#caso queira dar outro nome a pasta clonada no seu 
+#repositório localmente, insira o nome desejado 
+#após o link do clone.
+git clone git@github.com:willianjusten/github-course novoNomeDoRepositorio
+
+OBS:a pasta que receberá o clone deve ser o seu diretório atual, lembre-se disso.
+OBS2:ao acessar a pasta clonada, ela virá com todo o histórico de commits já feito
+anteriormente antes da clonagem.
+OBS3: se algum arquivo estiver listado no .gitignore ao fazer o clone de um repositorio
+para outro LOCALMENTE, esse arquivo listado no .gitignore não será passado no 
+repositório clonado.
 
 
 #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-#desfazer alterações de arquivos com git checkout 
+# enviar e receber os arquivos do GitHub
+#=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+#para ENVIAR os ARQUIVOS do repositorio local para o GitHub
+git push -u origin nomeDoBranch
+
+OBS:o -u é usado para nas para que nas próximas vezes que vc tiver que 
+enviar os arquivos para o GitHub, vc só precisar de digitar: git push
+
+#aula19
+#para RECEBER os ARQUIVOS do repositorio do GitHub
+git pull
+
+OBS: caso vc dêe git pull e aparecer a frase: already up-to-date, significa que
+os arquivos já são os mais recentes baixados do GitHub.
+
+
+#=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+# Criando branchs
+#=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+#cria uma nova branch (branch significa: ramificação)
+git branch nomeDaBranch
+
+#usado para renomear a branch local (a atual em que vc está)
+git branch -m novoNomeDaBranch
+
+#usado para renomear branchs local (sem ser a atual, as que vc não está)
+git branch -m nomeDaBranch novoNomeDaBranch
+
+#usado para deletar localmente (no git) a branch no site do GitHub
+git push origin --delete nomeDaBranchNoGitHub
+
+#mostra quais são os branchs existentes (quantos branchs foram criados nesse git) e 
+#qual é o branch corrente (o branch atual é sinalizado com asterisco (*) esse é o seu
+#branch em que vc está!).
+git branch
+
+#cria o branch e já entra nesse branch (ao mesmo tempo)
+git checkout -b nomeDoBranch
+
+#Nota: sempre que for trocar de uma branch para outra, tenha certeza de 
+comitar todos os arquivos, por que as mudanças do(s) arquivo(s) podem 
+ser descartadas caso mudar de branch.
+
+#deleta o branch (o -D tem que ser Maiúsculo)
+git branch -D nomeDoBranch
+
+#deleta a branch somente localmente, mantendo a branch remota (no GitHub)
+git branch -d nomeDaBranch
+
+OBS:caso tenha removido a branch somente localmente e ainda a mesma se 
+encontra no servidor (GitHub) e vc queira essa branch novamente na sua
+maquina (localmente), use: git checkout nomeDaBranchNoServidor
+
+#lista todas as branchs remotas (lá do servidor)
+git branch -r
+
+#lista as branchs locais (do computador) e as branchs remotas (do servidor GitHub)
+git branch -a
+
+#usado para remover o branch de origem lá do servidor (GitHub).
+git push origin --delete nomeDoBranch
+
+
+#=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+# Fazendo fork de um projeto
+#=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+#é só ir até um projeto de alguma pessoa na qual vc queira contribuir 
+#no GitHub, e clicar no botão fork. O repositório dessa pessoa será 
+#baixado no seu GitHub, e assim vc pode contribuir para essa pessoa.
+
+OBS:a diferença do clone para o fork é que o clone (é uma cópia) que eu faço 
+para os projetos que são meus (ou seja, eu clono um repositório do meu GitHub 
+para a minha maquina local), que são do meu proprio GitHub, e o 
+fork é (uma cópia) do repositório de outras pessoas para o meu repositório, 
+utilizada para colaboração de projetos para outras pessoas do GitHub.
+
+
+#=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+# usando o .gitignore
+#=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+
+#para fazer o git ignorar um ou vários arquivos dentro do repositório, crie um arquivo
+#chamado .gitignore e insira dentro dele os arquivos que vc quer que o git ignore.
+
+OBS: vc pode fazer com que o git ignore vários arquivos de uma determinada extensão, por 
+exemplo: *.py, ignorará todos os arquivos com extensão .py.
+OBS2: se um arquivo já foi rastreado/trackeado, ou seja, já está na stage área, e vc decide 
+inserir esse arquivo no .gitignore, então o git não consegue ignorar o arquivo. Para que 
+o git consiga ignora-lo, é necessário retirar o arquivo da stage area para aí sim o git conseguir ignora-lo.
+
+
+#=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+# desfazer alterações de arquivos com git checkout 
 #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
 #caso tenha feito uma alteração em um arquivo e queira desfazer
@@ -261,72 +408,6 @@ eu tehho, POR FAVOR BAIXE o que eu tenho (baixar com git pull). somente
 utilize git reset SOMENTE se o commit não tenha sido enviado ao 
 servidor (GitHub). 
   
-#=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-#Criando um novo repositório pela linha de comando
-#=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-
-#siga os passos abaixo:
-
-echo "# nomeDaPastaDoGitHub" >> README.md
-git init
-git add README.md
-git commit -m "first commit"
-git remote add origin git@github.com:eduardochagas/nomeDaPastaDoGitHub
-git push -u origin master
-
-
-#=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-# ou empurre ao GitHub um reporitorio (repo local, para o GitHub)  
-# a partir da linha de comando
-#=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-
-#significa: adicione ao repositório remoto na origem desse link git@github...
-#segundo comando: empurre para a origem (que é o link até o repositório do 
-#GitHub, ou seja, git@github...) os arquivos da branch local chamado master.
-git remote add origin git@github.com:eduardochagas/nomeDaPastaDoGitHub
-git push -u origin master
-
-#mostra a origem (do repositorio remoto)
-git remote
-
-#mostra a origem (do repositório remoto) e seu endereço
-git remote -v
-
-
-#=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-# Clonando repositorios do GitHub
-#=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-
-#clona todo um repositório para a sua maquina local
-#caso queira dar outro nome a pasta clonada no seu 
-#repositório localmente, insira o nome desejado 
-#após o link do clone.
-git clone git@github.com:willianjusten/github-course novoNomeDoRepositorio
-
-OBS:a pasta que receberá o clone deve ser o seu diretório atual, lembre-se disso.
-OBS2:ao acessar a pasta clonada, ela virá com todo o histórico de commits já feito
-anteriormente antes da clonagem.
-OBS3: se algum arquivo estiver listado no .gitignore ao fazer o clone de um repositorio
-para outro LOCALMENTE, esse arquivo listado no .gitignore não será passado no 
-repositório clonado.
-
-
-#=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-# enviar e receber os arquivos do GitHub
-#=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-
-#para ENVIAR os ARQUIVOS do repositorio local para o GitHub
-git push -u origin nomeDoBranch
-
-OBS:o -u é usado para nas para que nas próximas vezes que vc tiver que 
-enviar os arquivos para o GitHub, vc só precisar de digitar: git push
-
-#aula19
-#para RECEBER os ARQUIVOS do repositorio do GitHub
-git pull
-
-OBS: caso vc dêe git pull e aparecer a frase: already up-to-date, significa que
-os arquivos já são os mais recentes baixados do GitHub.
 
 
 #=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -373,69 +454,6 @@ git push origin :tagDefinidaNoReleaseDoGitHub
 
 OBS: caso vc dêe git pull e aparecer a frase: already up-to-date, significa que
 os arquivos já são os mais recentes baixados do GitHub.
-
-
-#=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-# Fazendo fork de um projeto
-#=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-
-#é só ir até um projeto de alguma pessoa na qual vc queira contribuir 
-#no GitHub, e clicar no botão fork. O repositório dessa pessoa será 
-#baixado no seu GitHub, e assim vc pode contribuir para essa pessoa.
-
-OBS:a diferença do clone para o fork é que o clone (é uma cópia) que eu faço 
-para os projetos que são meus (ou seja, eu clono um repositório do meu GitHub 
-para a minha maquina local), que são do meu proprio GitHub, e o 
-fork é (uma cópia) do repositório de outras pessoas para o meu repositório, 
-utilizada para colaboração de projetos para outras pessoas do GitHub.
-
-
-#=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-# Criando branchs
-#=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
-
-#cria uma nova branch (branch significa: ramificação)
-git branch nomeDaBranch
-
-#usado para renomear a branch local (a atual em que vc está)
-git branch -m novoNomeDaBranch
-
-#usado para renomear branchs local (sem ser a atual, as que vc não está)
-git branch -m nomeDaBranch novoNomeDaBranch
-
-#usado para deletar localmente (no git) a branch no site do GitHub
-git push origin --delete nomeDaBranchNoGitHub
-
-#mostra quais são os branchs existentes (quantos branchs foram criados nesse git) e 
-#qual é o branch corrente (o branch atual é sinalizado com asterisco (*) esse é o seu
-#branch em que vc está!).
-git branch
-
-#cria o branch e já entra nesse branch (ao mesmo tempo)
-git checkout -b nomeDoBranch
-
-#Nota: sempre que for trocar de uma branch para outra, tenha certeza de 
-comitar todos os arquivos, por que as mudanças do(s) arquivo(s) podem 
-ser descartadas caso mudar de branch.
-
-#deleta o branch (o -D tem que ser Maiúsculo)
-git branch -D nomeDoBranch
-
-#deleta a branch somente localmente, mantendo a branch remota (no GitHub)
-git branch -d nomeDaBranch
-
-OBS:caso tenha removido a branch somente localmente e ainda a mesma se 
-encontra no servidor (GitHub) e vc queira essa branch novamente na sua
-maquina (localmente), use: git checkout nomeDaBranchNoServidor
-
-#lista todas as branchs remotas (lá do servidor)
-git branch -r
-
-#lista as branchs locais (do computador) e as branchs remotas (do servidor GitHub)
-git branch -a
-
-#usado para remover o branch de origem lá do servidor (GitHub).
-git push origin --delete nomeDoBranch
 
 
 #=-=-=-=-=-=-=-=-=--=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
